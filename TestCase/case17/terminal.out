@@ -1,0 +1,15 @@
+State "SV" defined for "A_P5" is unused in PST!
+State "TV" defined for "A_P9" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "A_N16".
+State "QV" defined for "B/B_N1" is unused in PST!
+State "LV" defined for "B/B_N4" is unused in PST!
+State "IDEL" defined for "B/B_N4" is unused in PST!
+State "ACTIVE" defined for "B/B_N7" is unused in PST!
+State "YV" defined for "B/B_N13" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "B/B_N16".
+State "YV" defined for "C/C_N1" is unused in PST!
+State "YV" defined for "C/C_N3" is unused in PST!
+State "TV" defined for "C/C_N12" is unused in PST!
+State "HV" defined for "C/C_N15" is unused in PST!
+State "WV" defined for "C/C_N15" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "C/C_N16".

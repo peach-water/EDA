@@ -1,0 +1,6 @@
+Supply_Source VDD
+Supply_Net VDD A/B/VDD 
+Supply_Port VDD A/B/VDD 
+Supply_Source VSS
+Supply_Net VSS A/B/VSS 
+Supply_Port VSS A/B/VSS 

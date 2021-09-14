@@ -1,0 +1,14 @@
+create_power_domain TOP
+create_supply_port VDD
+create_supply_net VDD
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VDD -ports VDD
+connect_supply_net VSS -ports VSS
+add_port_state VDD -state {ON 1.0} -state {HV 0.8} -state {OFF off}
+add_port_state VSS -state {ON 1.0} -state {OFF off}
+create_pst pt -supplies {VDD VSS}
+add_pst_state S1 -pst pt -state {ON OFF}
+add_pst_state S2 -pst pt -state {HV OFF}
+add_pst_state S3 -pst pt -state {OFF OFF}
+set_domain_supply_net TOP -primary_power_net VDD -primary_ground_net VSS

@@ -1,0 +1,119 @@
+create_power_domain PD_A -include_scope
+create_supply_port A_P1
+create_supply_net A_N1
+create_supply_port A_P2
+create_supply_net A_N2
+create_supply_port A_P3
+create_supply_net A_N3
+create_supply_port A_P4
+create_supply_net A_N4
+add_port_state A_P1 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state A_P2 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state A_P3 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state A_P4 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+ 
+ 
+ 
+ 
+set_domain_supply_net PD_A -primary_power_net A_N1 -primary_ground_net A_N4
+set_scope B
+create_power_domain PD_B -include_scope
+create_supply_port B_P1
+create_supply_net B_N1
+create_supply_port B_P2
+create_supply_net B_N2
+create_supply_port B_P3
+create_supply_net B_N3
+create_supply_port B_P4
+create_supply_net B_N4
+add_port_state B_P1 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state B_P2 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state B_P3 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state B_P4 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+connect_supply_net B_N1 -ports {B_P1}
+connect_supply_net B_N2 -ports {B_P2}
+connect_supply_net B_N3 -ports {B_P3}
+connect_supply_net B_N4 -ports {B_P4}
+create_pst pt_B -supplies {B_N1 B_N2 B_N3 B_N4 }
+add_pst_state S1 -pst pt_B -state {ON UV TV UV }
+add_pst_state S2 -pst pt_B -state {UV LV IDEL SV }
+add_pst_state S3 -pst pt_B -state {LV CV QV QV }
+add_pst_state S4 -pst pt_B -state {WV LV RV UV }
+add_pst_state S5 -pst pt_B -state {ACTIVE TV ON RV }
+add_pst_state S6 -pst pt_B -state {LV ACTIVE SV OFF }
+add_pst_state S7 -pst pt_B -state {CV WV UV ON }
+add_pst_state S8 -pst pt_B -state {EV UV YV HV }
+add_pst_state S9 -pst pt_B -state {CV HV HV TV }
+add_pst_state S10 -pst pt_B -state {TV SV RV OFF }
+add_pst_state S11 -pst pt_B -state {IDEL RV OFF ON }
+add_pst_state S12 -pst pt_B -state {UV ACTIVE UV EV }
+add_pst_state S13 -pst pt_B -state {OFF TV EV QV }
+add_pst_state S14 -pst pt_B -state {EV OFF TV WV }
+add_pst_state S15 -pst pt_B -state {OFF HV SV IDEL }
+add_pst_state S16 -pst pt_B -state {ACTIVE QV OFF ON }
+add_pst_state S17 -pst pt_B -state {CV SV OFF RV }
+add_pst_state S18 -pst pt_B -state {QV TV WV HV }
+set_domain_supply_net PD_B -primary_power_net B_N1 -primary_ground_net B_N4
+set_scope ..
+set_scope C
+create_power_domain PD_C -include_scope
+create_supply_port C_P1
+create_supply_net C_N1
+create_supply_port C_P2
+create_supply_net C_N2
+create_supply_port C_P3
+create_supply_net C_N3
+create_supply_port C_P4
+create_supply_net C_N4
+add_port_state C_P1 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state C_P2 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state C_P3 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+add_port_state C_P4 -state  {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {ACTIVE 1.5} -state {IDEL 1.8} -state {CV 0.3} -state {SV 0.5} -state {OFF off} -state {QV 2.1} -state {WV 2.2} -state {EV 2.3} -state {RV 2.4} -state {TV 2.5} -state {YV 2.6} -state {UV 2.7}
+connect_supply_net C_N1 -ports {C_P1}
+connect_supply_net C_N2 -ports {C_P2}
+connect_supply_net C_N3 -ports {C_P3}
+connect_supply_net C_N4 -ports {C_P4}
+create_pst pt_C -supplies {C_N1 C_N2 C_N3 C_N4 }
+add_pst_state S1 -pst pt_C -state {WV CV SV TV }
+add_pst_state S2 -pst pt_C -state {RV CV IDEL WV }
+add_pst_state S3 -pst pt_C -state {SV TV OFF HV }
+add_pst_state S4 -pst pt_C -state {LV CV IDEL OFF }
+add_pst_state S5 -pst pt_C -state {QV UV UV YV }
+add_pst_state S6 -pst pt_C -state {CV HV UV LV }
+add_pst_state S7 -pst pt_C -state {UV ON LV YV }
+add_pst_state S8 -pst pt_C -state {IDEL EV WV CV }
+add_pst_state S9 -pst pt_C -state {QV QV EV RV }
+add_pst_state S10 -pst pt_C -state {CV OFF IDEL UV }
+add_pst_state S11 -pst pt_C -state {YV UV QV OFF }
+add_pst_state S12 -pst pt_C -state {IDEL YV EV UV }
+add_pst_state S13 -pst pt_C -state {OFF TV EV QV }
+add_pst_state S14 -pst pt_C -state {EV OFF TV WV }
+add_pst_state S15 -pst pt_C -state {OFF HV SV IDEL }
+add_pst_state S16 -pst pt_C -state {ACTIVE QV OFF ON }
+add_pst_state S17 -pst pt_C -state {CV SV OFF RV }
+add_pst_state S18 -pst pt_C -state {QV TV WV HV }
+set_domain_supply_net PD_C -primary_power_net C_N1 -primary_ground_net C_N4
+set_scope ..
+connect_supply_net A_N1 -ports { A_P1 B/B_P1 C/C_P1}
+connect_supply_net A_N2 -ports { A_P2 B/B_P2 C/C_P2}
+connect_supply_net A_N3 -ports { A_P3 B/B_P3 C/C_P3}
+connect_supply_net A_N4 -ports { A_P4 B/B_P4 C/C_P4}
+create_pst pt_A -supplies {A_P1 A_P2 A_P3 A_P4 }
+add_pst_state S1 -pst pt_A -state {IDEL HV YV SV }
+add_pst_state S2 -pst pt_A -state {EV UV TV TV }
+add_pst_state S3 -pst pt_A -state {LV UV TV YV }
+add_pst_state S4 -pst pt_A -state {OFF OFF SV WV }
+add_pst_state S5 -pst pt_A -state {LV CV UV UV }
+add_pst_state S6 -pst pt_A -state {SV QV UV IDEL }
+add_pst_state S7 -pst pt_A -state {ON QV OFF OFF }
+add_pst_state S8 -pst pt_A -state {IDEL RV LV HV }
+add_pst_state S9 -pst pt_A -state {IDEL OFF OFF ON }
+add_pst_state S10 -pst pt_A -state {ON UV TV RV }
+add_pst_state S11 -pst pt_A -state {IDEL OFF WV YV }
+add_pst_state S12 -pst pt_A -state {HV WV ON TV }
+add_pst_state S13 -pst pt_A -state {OFF TV EV QV }
+add_pst_state S14 -pst pt_A -state {EV OFF TV WV }
+add_pst_state S15 -pst pt_A -state {OFF HV SV IDEL }
+add_pst_state S16 -pst pt_A -state {ACTIVE QV OFF ON }
+add_pst_state S17 -pst pt_A -state {CV SV OFF RV }
+add_pst_state S18 -pst pt_A -state {QV TV WV HV }

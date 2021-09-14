@@ -1,0 +1,38 @@
+State "LV" defined for "A_P2" is unused in PST!
+State "ACTIVE" defined for "A_P2" is unused in PST!
+State "CV" defined for "A_P3" is unused in PST!
+State "ON" defined for "A_P4" is unused in PST!
+State "YV" defined for "A_P5" is unused in PST!
+State "SV" defined for "A_P6" is unused in PST!
+State "TV" defined for "A_P6" is unused in PST!
+State "ON" defined for "A_P7" is unused in PST!
+State "HV" defined for "A_P8" is unused in PST!
+State "EV" defined for "A_P8" is unused in PST!
+State "OFF" defined for "A_P10" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "A_N10".
+State "UV" defined for "B/B_N1" is unused in PST!
+State "QV" defined for "B/B_N2" is unused in PST!
+State "RV" defined for "B/B_N2" is unused in PST!
+State "YV" defined for "B/B_N3" is unused in PST!
+State "YV" defined for "B/B_N4" is unused in PST!
+State "ON" defined for "B/B_N5" is unused in PST!
+State "HV" defined for "B/B_N5" is unused in PST!
+State "LV" defined for "B/B_N6" is unused in PST!
+State "RV" defined for "B/B_N6" is unused in PST!
+State "RV" defined for "B/B_N7" is unused in PST!
+State "HV" defined for "B/B_N8" is unused in PST!
+State "CV" defined for "B/B_N8" is unused in PST!
+State "RV" defined for "B/B_N9" is unused in PST!
+State "TV" defined for "B/B_N9" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "B/B_N10".
+State "TV" defined for "C/C_N3" is unused in PST!
+State "ACTIVE" defined for "C/C_N4" is unused in PST!
+State "OFF" defined for "C/C_N4" is unused in PST!
+State "EV" defined for "C/C_N4" is unused in PST!
+State "UV" defined for "C/C_N5" is unused in PST!
+State "SV" defined for "C/C_N6" is unused in PST!
+State "EV" defined for "C/C_N6" is unused in PST!
+State "SV" defined for "C/C_N7" is unused in PST!
+State "RV" defined for "C/C_N8" is unused in PST!
+State "OFF" defined for "C/C_N10" is unused in PST!
+Non-Zero State "ON" "HV" "LV" "ACTIVE" "IDEL" "CV" "SV" "QV" "WV" "EV" "RV" "TV" "YV" "UV" applied on ground net "C/C_N10".

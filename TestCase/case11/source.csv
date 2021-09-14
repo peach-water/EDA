@@ -1,0 +1,12 @@
+Supply_Source A_P1
+Supply_Net A_N1 B/B_N1 C/C_N1 
+Supply_Port A_P1 B/B_P1 C/C_P1 
+Supply_Source A_P2
+Supply_Net A_N2 B/B_N2 C/C_N2 
+Supply_Port A_P2 B/B_P2 C/C_P2 
+Supply_Source A_P3
+Supply_Net A_N3 B/B_N3 C/C_N3 
+Supply_Port A_P3 B/B_P3 C/C_P3 
+Supply_Source A_P4
+Supply_Net A_N4 B/B_N4 C/C_N4 
+Supply_Port A_P4 B/B_P4 C/C_P4 

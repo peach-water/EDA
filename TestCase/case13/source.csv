@@ -1,0 +1,24 @@
+Supply_Source A_P1
+Supply_Net A_N1 B/B_N1 C/C_N1 
+Supply_Port A_P1 B/B_P1 C/C_P1 
+Supply_Source A_P2
+Supply_Net A_N2 B/B_N2 C/C_N2 
+Supply_Port A_P2 B/B_P2 C/C_P2 
+Supply_Source A_P3
+Supply_Net A_N3 B/B_N3 C/C_N3 
+Supply_Port A_P3 B/B_P3 C/C_P3 
+Supply_Source A_P4
+Supply_Net A_N4 B/B_N4 C/C_N4 
+Supply_Port A_P4 B/B_P4 C/C_P4 
+Supply_Source A_P5
+Supply_Net A_N5 B/B_N5 C/C_N5 
+Supply_Port A_P5 B/B_P5 C/C_P5 
+Supply_Source A_P6
+Supply_Net A_N6 B/B_N6 C/C_N6 
+Supply_Port A_P6 B/B_P6 C/C_P6 
+Supply_Source A_P7
+Supply_Net A_N7 B/B_N7 C/C_N7 
+Supply_Port A_P7 B/B_P7 C/C_P7 
+Supply_Source A_P8
+Supply_Net A_N8 B/B_N8 C/C_N8 
+Supply_Port A_P8 B/B_P8 C/C_P8 
