@@ -49,10 +49,10 @@ bool UpfCommandMgr::readUpfFile(const std::string &fileName) {
     if (fileName.empty()) {
         return false;
     }
-    if (m_interp) {
+    if (m_interp) { // 这里首先检查TCL的解释器是否存在
         std::string cmdName = "source ";
         cmdName += fileName;
-        if (Tcl_Eval(m_interp, cmdName.c_str())) {
+        if (Tcl_Eval(m_interp, cmdName.c_str())) { // Tcl_Eval作用是检查当前命令是否成立
             return true;
         }
     }

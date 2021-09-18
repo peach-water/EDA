@@ -38,15 +38,15 @@ public:
         return m_location;
     }
 private:
-    UpfCommand(const UpfCommand&) = delete;
-    UpfCommand& operator= (const UpfCommand&) = delete;
+    UpfCommand(const UpfCommand&) = delete;  // 这个的意思是禁用拷贝构造函数
+    UpfCommand& operator= (const UpfCommand&) = delete; // 同上
     UpfCommandType::Enum m_cmd_type;
     std::string m_location;
 };
 
 class UpfCommandMgr {
 public:
-    static UpfCommandMgr* getInstance();
+    static UpfCommandMgr* getInstance(); // 创建一个新的UpfCommandMgr管理器，是指针类型的
     bool        readUpfFile(const std::string& fileName);
     UpfCommand* createUpfCommand(UpfCommandType::Enum type);
     void        clear();
@@ -65,7 +65,7 @@ private:
     UpfCommandMgr();
     ~UpfCommandMgr() {}
     static UpfCommandMgr* m_mgr;
-    Tcl_Interp* m_interp;
+    Tcl_Interp* m_interp; // TCL命令解释器
     std::vector<UpfCommand*> m_commands;
 };
 

@@ -63,7 +63,7 @@ protected:
     UpfCommand* m_command;
 };
 
-class PwPowerDomain : public PwObj {
+class PwPowerDomain : public PwObj { // 主要电源class类
 public:
     PwPowerDomain(PwScope* scope, UpfCommand* cmd, const std::string& name);
     ~PwPowerDomain() {}
@@ -89,7 +89,7 @@ private:
     PwSupplyNet* m_ground;
 };
 
-class PwSupplyConn : public PwObj {
+class PwSupplyConn : public PwObj { // 
 public:
     PwSupplyConn(PwScope* scope, UpfCommand* cmd, PwSupplyNet* sn, PwSupplyPort* sp);
     ~PwSupplyConn() {}
@@ -110,7 +110,7 @@ private:
     PwSupplyPort* m_supplyPort;
 };
 
-class PwSupplyNetwork : public PwObj {
+class PwSupplyNetwork : public PwObj { // 供电网络class类
 public:
     PwSupplyNetwork(PwScope* scope, UpfCommand* cmd, const std::string& name);
     virtual ~PwSupplyNetwork() {};
@@ -300,10 +300,10 @@ public:
                                   std::vector<PwSupplyState*>& states);
     PwScope*       createOrGetChildScope(const std::string& name, UpfCommand* cmd);
 
-    PwPowerDomain* findPowerDomain(const std::string& name);
-    PwSupplyNet*   findSupplyNet(const std::string& name);
-    PwSupplyPort*  findSupplyPort(const std::string& name);
-    PwScope*       findChildScope(const std::string& name);
+    PwPowerDomain* findPowerDomain(const std::string& name); // 同下
+    PwSupplyNet*   findSupplyNet(const std::string& name); // 同下
+    PwSupplyPort*  findSupplyPort(const std::string& name); // 寻找指定名称的PwSupplyPort类
+    PwScope*       findChildScope(const std::string& name); // 寻找指定名称的PwScope类
     PwPst*         findPst(const std::string& name);
 
     std::vector<PwScope*>::iterator beginChildScopes() {

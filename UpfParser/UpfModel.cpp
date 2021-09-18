@@ -384,7 +384,7 @@ PwSupplyConn* PwScope::createSupplyConn(UpfCommand *cmd, PwSupplyNet *sn, PwSupp
 
 std::string PwScope::getHierName() const {
     PwScope* parent = m_scope;
-    if (!parent) {
+    if (!parent) { // 检查有没有父级节点，否则添加类似/xxx/xxx.cpp的路径
         std::string name = getName();
         if (name == "/") {
             return "";

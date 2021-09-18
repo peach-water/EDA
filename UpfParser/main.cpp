@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
             upfTopFile = argv[++i];
         }
     }
-    if (upfTopFile.empty()) {
-        return -1;
-    }
-    UpfCommandMgr::getInstance()->readUpfFile(upfTopFile);
+    // if (upfTopFile.empty()) {
+    //     return -1;
+    // }
+    UpfCommandMgr::getInstance()->readUpfFile("example.upf");
     //do power analysis;
     PwObjMgr::getInstance()->print();
     PwObjMgr::getInstance()->clear();
