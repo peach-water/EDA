@@ -1,0 +1,32 @@
+create_power_domain TOP
+create_supply_port VDD
+create_supply_net VDD
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VDD -ports VDD
+connect_supply_net VSS -ports VSS
+add_port_state VDD -state {ON 1.0} -state {HV 0.8} -state {OFF off}
+add_port_state VSS -state {ON 1.0} -state {HV 0.8} -state {OFF off}
+create_pst pt -supplies {VDD VSS}
+add_pst_state S1 -pst pt -state {ON ON}
+add_pst_state S2 -pst pt -state {HV HV}
+add_pst_state S3 -pst pt -state {OFF OFF}
+
+set_scope A/B
+create_power_domain SUB
+create_supply_port VDD
+create_supply_net VDD
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VDD -ports VDD
+connect_supply_net VSS -ports VSS
+add_port_state VDD -state {ON 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {ON 1.0} -state {LV 0.6} -state {OFF off}
+create_pst pt -supplies {VDD VSS}
+add_pst_state S1 -pst pt -state {ON ON}
+add_pst_state S2 -pst pt -state {LV LV}
+add_pst_state S3 -pst pt -state {OFF OFF}
+set_scope ../..
+
+connect_supply_net VSS -ports {A/B/VSS}
+connect_supply_net VDD -ports {A/B/VDD}

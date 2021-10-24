@@ -1,0 +1,15 @@
+Supply_Source VN4
+Supply_Net CPU_2/VP4_2 VN4 
+Supply_Port CPU_2/VP4_2 PMG/VP4 
+Supply_Source VP3
+Supply_Net PMG/VP3_1 VN3 
+Supply_Port PMG/VP3_1 VP3 
+Supply_Source VSS
+Supply_Net CPU_2/VSS CPU_1/ALU/VSS CPU_1/GN2 PMG/VSS GN1 
+Supply_Port CPU_1/ALU/VSS PMG/VSS CPU_2/VSS CPU_1/VSS VSS 
+Supply_Source VP2
+Supply_Net CPU_1/ALU/VP2_1_1 CPU_1/VN2_1 VN2 
+Supply_Port CPU_1/ALU/VP2_1_1 CPU_1/VP2_1 VP2 
+Supply_Source VP1
+Supply_Net CPU_2/VP1_2 CPU_1/VP1_1 VN1 
+Supply_Port CPU_1/VP1_1 CPU_2/VP1_2 VP1 

@@ -1,0 +1,115 @@
+create_power_domain PD_TOP 
+
+create_supply_port VP1
+create_supply_port VP2
+create_supply_port VSS
+create_supply_port VP3
+create_supply_net VN1
+create_supply_net VN2
+create_supply_net VN3
+create_supply_net VN4
+create_supply_net GN1
+
+set_scope PMG
+create_power_domain PD_PMG
+create_supply_port VP3_1
+create_supply_net VP3_1
+connect_supply_net VP3_1 -ports VP3_1
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports VSS
+create_supply_port VP4
+set_domain_supply_net PD_PMG -primary_power_net VP3_1 -primary_ground_net VSS
+add_port_state VP3_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VP4 -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt3 -supplies {VP3_1 VSS}
+add_pst_state S1 -pst pt3 -state {ON OFF}
+add_pst_state S2 -pst pt3 -state {HV OFF}
+add_pst_state S3 -pst pt3 -state {LV OFF}
+add_pst_state S4 -pst pt3 -state {OFF OFF}
+set_scope ..
+
+set_scope CPU_1
+create_power_domain PD_CPU_1
+create_supply_port VP1_1
+create_supply_net VP1_1
+connect_supply_net VP1_1 -ports VP1_1
+create_supply_port VP2_1
+create_supply_port VSS
+create_supply_net VN2_1
+create_supply_net GN2
+
+set_scope ALU
+create_power_domain PD_ALU
+create_supply_port VP2_1_1
+create_supply_net VP2_1_1
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VP2_1_1 -ports VP2_1_1
+connect_supply_net VSS -ports VSS
+set_domain_supply_net PD_ALU -primary_power_net VP2_1_1 -primary_ground_net VSS
+add_port_state VP2_1_1 -state {ON 1.2} -state {HV 1.0} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt1_1 -supplies {VP2_1_1 VSS}
+add_pst_state S1 -pst pt1_1 -state {ON OFF}
+add_pst_state S2 -pst pt1_1 -state {HV OFF}
+add_pst_state S3 -pst pt1_1 -state {OFF OFF}
+set_scope ..
+
+connect_supply_net GN2 -ports {VSS ALU/VSS}
+connect_supply_net VN2_1 -ports {VP2_1}
+#connect_supply_net VN2_1 -ports {VP2_1 ALU/VP2_1_1}
+set_domain_supply_net PD_CPU_1 -primary_power_net VP1_1 -primary_ground_net GN2
+add_port_state VP1_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VP2_1 -state {ON 1.2} -state {HV 1.0} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt1 -supplies {VP1_1 VN2_1 GN2}
+add_pst_state S1 -pst pt1 -state {ON ON OFF}
+add_pst_state S2 -pst pt1 -state {ON HV OFF}
+add_pst_state S3 -pst pt1 -state {LV HV OFF}
+add_pst_state S4 -pst pt1 -state {OFF HV OFF}
+add_pst_state S5 -pst pt1 -state {OFF ON OFF}
+add_pst_state S6 -pst pt1 -state {OFF OFF OFF}
+set_scope ..
+
+set_scope CPU_2
+create_power_domain PD_CPU_2
+create_supply_port VP1_2
+create_supply_net VP1_2
+connect_supply_net VP1_2 -ports VP1_2
+create_supply_port VP4_2
+create_supply_net VP4_2
+connect_supply_net VP4_2 -ports VP4_2
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports VSS
+set_domain_supply_net PD_CPU_2 -primary_power_net VP1_2 -primary_ground_net VSS
+add_port_state VSS -state {OFF off}
+add_port_state VP1_2 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VP4_2 -state {LV 0.6} -state {OFF off}
+create_pst pt2 -supplies {VP1_2 VP4_2 VSS}
+add_pst_state S1 -pst pt2 -state {ON LV OFF}
+add_pst_state S2 -pst pt2 -state {ON OFF OFF}
+add_pst_state S3 -pst pt2 -state {HV LV OFF}
+add_pst_state S4 -pst pt2 -state {LV LV OFF}
+add_pst_state S5 -pst pt2 -state {OFF OFF OFF}
+set_scope ..
+
+connect_supply_net VN1 -ports {VP1 CPU_1/VP1_1 CPU_2/VP1_2}
+connect_supply_net VN2 -ports {VP2 CPU_1/VP2_1}
+connect_supply_net GN1 -ports {VSS CPU_1/VSS CPU_2/VSS PMG/VSS}
+connect_supply_net VN3 -ports {VP3 PMG/VP3_1}
+connect_supply_net VN4 -ports {PMG/VP4 CPU_2/VP4_2}
+set_domain_supply_net PD_TOP -primary_power_net VN1 -primary_ground_net GN1
+
+add_port_state VP1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VP2 -state {ON 1.2} -state {HV 1.0} -state {OFF off}
+add_port_state VP3 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt -supplies {VN1 VN2 VN3 GN1}
+add_pst_state S1 -pst pt -state {ON ON ON OFF}
+add_pst_state S2 -pst pt -state {HV ON LV OFF}
+add_pst_state S3 -pst pt -state {LV HV LV OFF}
+add_pst_state S4 -pst pt -state {ON OFF HV OFF}
+add_pst_state S5 -pst pt -state {OFF OFF OFF OFF} 

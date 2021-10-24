@@ -1,0 +1,15 @@
+Supply_Source SP1
+Supply_Net SN1 Scope1/SP1_1 Scope2/SP1_2 
+Supply_Port SP1 Scope1/SP1_1 Scope2/SP1_2 
+Supply_Source SP2
+Supply_Net SN2 Scope1/SN2_1 Scope1/Scope1_1/SP2_1_1 
+Supply_Port SP2 Scope1/SP2_1 Scope1/Scope1_1/SP2_1_1 
+Supply_Source VSS
+Supply_Net GN1 Scope1/GN2 Scope1/Scope1_1/VSS Scope2/VSS Scope3/VSS 
+Supply_Port VSS Scope1/VSS Scope1/Scope1_1/VSS Scope2/VSS Scope3/VSS 
+Supply_Source SP3
+Supply_Net SN3 Scope3/SP3_1 
+Supply_Port SP3 Scope3/SP3_1 
+Supply_Source SN4
+Supply_Net SN4 Scope2/SP4_2 
+Supply_Port Scope3/SP4 Scope2/SP4_2 

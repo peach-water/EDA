@@ -78,8 +78,25 @@ static PwScope* getPwScopeByHierName(PwScope* cScope, const std::string& scopeNa
     }
 }
 
+
 int UpfCommandMgr::set_scope_cmd(ClientData clientData, Tcl_Interp *interp, int argc, Tcl_Obj *const *argv) {
     // set_scope scope
+
+    // 2021/9/27
+    // "argc" 表示一句upf的命令的元素个数，以空格进行划分块
+    // 例如："set_design_top top" : argc = 2; 
+    //     "add_pst_state s1 -pst pst -state {ON ON}": argc = 6
+
+    // "argv" 表示upf的命令行，以list形式存储，以空格划分
+    // 例如：在 "add_pst_state s1 -pst pst -state {ON ON}" 这一个命令中: 
+    //  argv[0]: "add_pst_state"
+    //  argv[1]: "s1"
+    //  argv[2]: "-pst"
+    //  argv[3]: "pst"
+    //  argv[4]: "-state"
+    //  argv[5]: "{ON ON}"
+
+    // 以下的函数均有argc和argv，表示的是一样的
     PwScope* cScope = PwObjMgr::getInstance()->getCurrentScope();
     UpfCommand* command = UpfCommandMgr::getInstance()->createUpfCommand(UpfCommandType::SET_SCOPE);
     std::string scopeName = Tcl_GetString(argv[1]);

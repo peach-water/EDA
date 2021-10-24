@@ -241,12 +241,15 @@ public:
     std::vector<PwSupplyState*>::iterator endStates() {
         return m_states.end();
     }
+    std::vector<PwSupplyState*> *getStates(){
+        return &m_states;
+    }
     PwPst*  getPst() const {
         return m_pst;
     }
 private:
     PwPst* m_pst;
-    std::vector<PwSupplyState*> m_states;
+    std::vector<PwSupplyState*> m_states; // 这是每一行中的一个
 };
 
 class PwPst : public PwObj {
@@ -282,7 +285,7 @@ public:
 
 private:
     std::vector<PwSupplyNetwork*> m_header;
-    std::vector<PwPstState*> m_states;
+    std::vector<PwPstState*> m_states; // 这个存放的是一行
 };
 
 class PwScope : public PwObj {
@@ -337,6 +340,13 @@ public:
         return m_psts.end();
     }
 
+    std::vector<PwSupplyConn*>::iterator beginSupplyConn(){
+        return m_supplyConns.begin();
+    }
+    std::vector<PwSupplyConn*>::iterator endSupplyConn(){
+        return m_supplyConns.end();
+    }
+
     virtual std::string getHierName() const;
     void    print();
 private:
@@ -347,7 +357,7 @@ private:
     std::vector<PwPst*>         m_psts;
     std::vector<PwSupplyState*> m_states;
     std::vector<PwSupplyConn*>  m_supplyConns;
-    std::vector<PwPstState*>    m_pstStates;
+    std::vector<PwPstState*>    m_pstStates; // 这是一整行
 };
 
 

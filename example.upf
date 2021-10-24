@@ -1,0 +1,19 @@
+set_design_top top
+
+create_power_domain PD_TOP
+create_supply_net VDD
+create_supply_port VDD
+connect_supply_net VDD -ports {VDD}
+
+create_supply_net VSS
+create_supply_port VSS
+connect_supply_net VSS -ports {VSS}
+
+
+add_port_state VDD -state {ON 1.0} -state {HV 0.6} -state {OFF off}
+add_port_state VSS -state {ON 0.8} -state {LV 0.4} -state {OFF off}
+
+create_pst pst -supplies {VDD VSS}
+add_pst_state s1 -pst pst -state {ON ON}
+add_pst_state s2 -pst pst -state {ON OFF}
+

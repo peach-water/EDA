@@ -1,0 +1,42 @@
+#Copyright (c) 2020-2021 by XEPIC Technology Co., Ltd.
+#ALL RIGHTS RESERVED  https://www.x-epic.com
+create_power_domain PD_TOP -include_scope
+
+create_supply_port VSS
+create_supply_port SP3
+
+create_supply_net GN1
+create_supply_net SN3
+
+set_scope Scope3
+create_power_domain PD_Scope3 -include_scope
+create_supply_port SP3_1
+create_supply_net SP3_1
+connect_supply_net SP3_1 -ports {SP3_1}
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports {VSS}
+
+set_domain_supply_net PD_Scope3 -primary_power_net SP3_1 -primary_ground_net VSS
+add_port_state SP3_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+
+add_port_state VSS -state {OFF off}
+create_pst pt3 -supplies {SP3_1 VSS}
+add_pst_state S1 -pst pt3 -state {ON OFF}
+add_pst_state S2 -pst pt3 -state {HV OFF}
+add_pst_state S3 -pst pt3 -state {LV OFF}
+add_pst_state S4 -pst pt3 -state {OFF OFF}
+set_scope ..
+
+connect_supply_net GN1 -ports {VSS Scope3/VSS}
+connect_supply_net SN3 -ports {SP3 Scope3/SP3_1}
+
+set_domain_supply_net PD_TOP -primary_power_net SN3 -primary_ground_net GN1
+
+add_port_state SP3 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt -supplies {SN3 GN1}
+add_pst_state S1 -pst pt -state {ON OFF}
+add_pst_state S2 -pst pt -state {HV OFF}
+add_pst_state S4 -pst pt -state {HV OFF}
+add_pst_state S5 -pst pt -state {OFF OFF}

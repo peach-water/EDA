@@ -1,0 +1,6 @@
+Supply_Source VSS
+Supply_Net GN1 Scope3/VSS 
+Supply_Port VSS Scope3/VSS 
+Supply_Source SP3
+Supply_Net SN3 Scope3/SP3_1 
+Supply_Port SP3 Scope3/SP3_1 

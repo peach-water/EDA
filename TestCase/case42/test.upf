@@ -1,0 +1,405 @@
+#Copyright (c) 2020-2021 by XEPIC Technology Co., Ltd.
+#ALL RIGHTS RESERVED  https://www.x-epic.com
+create_power_domain Scope_0_0 -include_scope
+create_supply_port Port_0_0_0
+create_supply_net Port_0_0_0
+create_supply_port Port_0_0_1
+create_supply_net Port_0_0_1
+create_supply_port Port_0_0_2
+create_supply_net Port_0_0_2
+create_supply_port Port_0_0_3
+create_supply_net Port_0_0_3
+set_scope Scope_1_0
+create_power_domain Scope_1_0 -include_scope
+create_supply_port Port_1_0_0
+create_supply_net Port_1_0_0
+create_supply_port Port_1_0_1
+create_supply_net Port_1_0_1
+create_supply_port Port_1_0_2
+create_supply_net Port_1_0_2
+create_supply_port Port_1_0_3
+create_supply_net Port_1_0_3
+set_scope Scope_2_0
+create_power_domain Scope_2_0 -include_scope
+create_supply_port Port_2_0_0
+create_supply_net Port_2_0_0
+create_supply_port Port_2_0_1
+create_supply_net Port_2_0_1
+create_supply_port Port_2_0_2
+create_supply_net Port_2_0_2
+create_supply_port Port_2_0_3
+create_supply_net Port_2_0_3
+set_scope Scope_3_0
+create_power_domain Scope_3_0 -include_scope
+create_supply_port Port_3_0_0
+create_supply_net Port_3_0_0
+create_supply_port Port_3_0_1
+create_supply_net Port_3_0_1
+create_supply_port Port_3_0_2
+create_supply_net Port_3_0_2
+create_supply_port Port_3_0_3
+create_supply_net Port_3_0_3
+connect_supply_net Port_3_0_0 -ports {Port_3_0_0}
+connect_supply_net Port_3_0_1 -ports {Port_3_0_1}
+connect_supply_net Port_3_0_2 -ports {Port_3_0_2}
+connect_supply_net Port_3_0_3 -ports {Port_3_0_3}
+set_domain_supply_net Scope_3_0 -primary_power_net Port_3_0_1 -primary_ground_net Port_3_0_0
+add_port_state Port_3_0_0 -state {ST_0 off} 
+add_port_state Port_3_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_0 -supplies {Port_3_0_0 Port_3_0_1 Port_3_0_2 Port_3_0_3 }
+add_pst_state S0 -pst pt_3_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_0 -state {ST_0 ST_0 ST_3 ST_4}
+set_scope ..
+set_scope Scope_3_1
+create_power_domain Scope_3_1 -include_scope
+create_supply_port Port_3_1_0
+create_supply_net Port_3_1_0
+create_supply_port Port_3_1_1
+create_supply_net Port_3_1_1
+create_supply_port Port_3_1_2
+create_supply_net Port_3_1_2
+create_supply_port Port_3_1_3
+create_supply_net Port_3_1_3
+connect_supply_net Port_3_1_0 -ports {Port_3_1_0}
+connect_supply_net Port_3_1_1 -ports {Port_3_1_1}
+connect_supply_net Port_3_1_2 -ports {Port_3_1_2}
+connect_supply_net Port_3_1_3 -ports {Port_3_1_3}
+set_domain_supply_net Scope_3_1 -primary_power_net Port_3_1_1 -primary_ground_net Port_3_1_0
+add_port_state Port_3_1_0 -state {ST_0 off} 
+add_port_state Port_3_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_1 -supplies {Port_3_1_0 Port_3_1_1 Port_3_1_2 Port_3_1_3 }
+add_pst_state S0 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_1 -state {ST_0 ST_1 ST_0 ST_4}
+set_scope ..
+connect_supply_net Port_2_0_0 -ports {Port_2_0_0 Scope_3_0/Port_3_0_0 Scope_3_1/Port_3_1_0 }
+connect_supply_net Port_2_0_1 -ports {Port_2_0_1 Scope_3_0/Port_3_0_1 Scope_3_1/Port_3_1_1 }
+connect_supply_net Port_2_0_2 -ports {Port_2_0_2 Scope_3_0/Port_3_0_2 Scope_3_1/Port_3_1_2 }
+connect_supply_net Port_2_0_3 -ports {Port_2_0_3 Scope_3_0/Port_3_0_3 Scope_3_1/Port_3_1_3 }
+set_domain_supply_net Scope_2_0 -primary_power_net Port_2_0_1 -primary_ground_net Port_2_0_0
+add_port_state Port_2_0_0 -state {ST_0 off} 
+add_port_state Port_2_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_2_0 -supplies {Port_2_0_0 Port_2_0_1 Port_2_0_2 Port_2_0_3 }
+add_pst_state S0 -pst pt_2_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_2_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_2_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_2_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_2_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_2_0 -state {ST_0 ST_3 ST_4 ST_2}
+set_scope ..
+set_scope Scope_2_1
+create_power_domain Scope_2_1 -include_scope
+create_supply_port Port_2_1_0
+create_supply_net Port_2_1_0
+create_supply_port Port_2_1_1
+create_supply_net Port_2_1_1
+create_supply_port Port_2_1_2
+create_supply_net Port_2_1_2
+create_supply_port Port_2_1_3
+create_supply_net Port_2_1_3
+set_scope Scope_3_0
+create_power_domain Scope_3_0 -include_scope
+create_supply_port Port_3_0_0
+create_supply_net Port_3_0_0
+create_supply_port Port_3_0_1
+create_supply_net Port_3_0_1
+create_supply_port Port_3_0_2
+create_supply_net Port_3_0_2
+create_supply_port Port_3_0_3
+create_supply_net Port_3_0_3
+connect_supply_net Port_3_0_0 -ports {Port_3_0_0}
+connect_supply_net Port_3_0_1 -ports {Port_3_0_1}
+connect_supply_net Port_3_0_2 -ports {Port_3_0_2}
+connect_supply_net Port_3_0_3 -ports {Port_3_0_3}
+set_domain_supply_net Scope_3_0 -primary_power_net Port_3_0_1 -primary_ground_net Port_3_0_0
+add_port_state Port_3_0_0 -state {ST_0 off} 
+add_port_state Port_3_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_0 -supplies {Port_3_0_0 Port_3_0_1 Port_3_0_2 Port_3_0_3 }
+add_pst_state S0 -pst pt_3_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_0 -state {ST_0 ST_3 ST_2 ST_3}
+set_scope ..
+set_scope Scope_3_1
+create_power_domain Scope_3_1 -include_scope
+create_supply_port Port_3_1_0
+create_supply_net Port_3_1_0
+create_supply_port Port_3_1_1
+create_supply_net Port_3_1_1
+create_supply_port Port_3_1_2
+create_supply_net Port_3_1_2
+create_supply_port Port_3_1_3
+create_supply_net Port_3_1_3
+connect_supply_net Port_3_1_0 -ports {Port_3_1_0}
+connect_supply_net Port_3_1_1 -ports {Port_3_1_1}
+connect_supply_net Port_3_1_2 -ports {Port_3_1_2}
+connect_supply_net Port_3_1_3 -ports {Port_3_1_3}
+set_domain_supply_net Scope_3_1 -primary_power_net Port_3_1_1 -primary_ground_net Port_3_1_0
+add_port_state Port_3_1_0 -state {ST_0 off} 
+add_port_state Port_3_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_1 -supplies {Port_3_1_0 Port_3_1_1 Port_3_1_2 Port_3_1_3 }
+add_pst_state S0 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_2}
+set_scope ..
+connect_supply_net Port_2_1_0 -ports {Port_2_1_0 Scope_3_0/Port_3_0_0 Scope_3_1/Port_3_1_0 }
+connect_supply_net Port_2_1_1 -ports {Port_2_1_1 Scope_3_0/Port_3_0_1 Scope_3_1/Port_3_1_1 }
+connect_supply_net Port_2_1_2 -ports {Port_2_1_2 Scope_3_0/Port_3_0_2 Scope_3_1/Port_3_1_2 }
+connect_supply_net Port_2_1_3 -ports {Port_2_1_3 Scope_3_0/Port_3_0_3 Scope_3_1/Port_3_1_3 }
+set_domain_supply_net Scope_2_1 -primary_power_net Port_2_1_1 -primary_ground_net Port_2_1_0
+add_port_state Port_2_1_0 -state {ST_0 off} 
+add_port_state Port_2_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_2_1 -supplies {Port_2_1_0 Port_2_1_1 Port_2_1_2 Port_2_1_3 }
+add_pst_state S0 -pst pt_2_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_2_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_2_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_2_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_2_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_2_1 -state {ST_0 ST_2 ST_2 ST_3}
+set_scope ..
+connect_supply_net Port_1_0_0 -ports {Port_1_0_0 Scope_2_0/Port_2_0_0 Scope_2_1/Port_2_1_0 }
+connect_supply_net Port_1_0_1 -ports {Port_1_0_1 Scope_2_0/Port_2_0_1 Scope_2_1/Port_2_1_1 }
+connect_supply_net Port_1_0_2 -ports {Port_1_0_2 Scope_2_0/Port_2_0_2 Scope_2_1/Port_2_1_2 }
+connect_supply_net Port_1_0_3 -ports {Port_1_0_3 Scope_2_0/Port_2_0_3 Scope_2_1/Port_2_1_3 }
+set_domain_supply_net Scope_1_0 -primary_power_net Port_1_0_1 -primary_ground_net Port_1_0_0
+add_port_state Port_1_0_0 -state {ST_0 off} 
+add_port_state Port_1_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_1_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_1_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_1_0 -supplies {Port_1_0_0 Port_1_0_1 Port_1_0_2 Port_1_0_3 }
+add_pst_state S0 -pst pt_1_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_1_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_1_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_1_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_1_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_1_0 -state {ST_0 ST_1 ST_3 ST_2}
+set_scope ..
+set_scope Scope_1_1
+create_power_domain Scope_1_1 -include_scope
+create_supply_port Port_1_1_0
+create_supply_net Port_1_1_0
+create_supply_port Port_1_1_1
+create_supply_net Port_1_1_1
+create_supply_port Port_1_1_2
+create_supply_net Port_1_1_2
+create_supply_port Port_1_1_3
+create_supply_net Port_1_1_3
+set_scope Scope_2_0
+create_power_domain Scope_2_0 -include_scope
+create_supply_port Port_2_0_0
+create_supply_net Port_2_0_0
+create_supply_port Port_2_0_1
+create_supply_net Port_2_0_1
+create_supply_port Port_2_0_2
+create_supply_net Port_2_0_2
+create_supply_port Port_2_0_3
+create_supply_net Port_2_0_3
+set_scope Scope_3_0
+create_power_domain Scope_3_0 -include_scope
+create_supply_port Port_3_0_0
+create_supply_net Port_3_0_0
+create_supply_port Port_3_0_1
+create_supply_net Port_3_0_1
+create_supply_port Port_3_0_2
+create_supply_net Port_3_0_2
+create_supply_port Port_3_0_3
+create_supply_net Port_3_0_3
+connect_supply_net Port_3_0_0 -ports {Port_3_0_0}
+connect_supply_net Port_3_0_1 -ports {Port_3_0_1}
+connect_supply_net Port_3_0_2 -ports {Port_3_0_2}
+connect_supply_net Port_3_0_3 -ports {Port_3_0_3}
+set_domain_supply_net Scope_3_0 -primary_power_net Port_3_0_1 -primary_ground_net Port_3_0_0
+add_port_state Port_3_0_0 -state {ST_0 off} 
+add_port_state Port_3_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_0 -supplies {Port_3_0_0 Port_3_0_1 Port_3_0_2 Port_3_0_3 }
+add_pst_state S0 -pst pt_3_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_0 -state {ST_0 ST_0 ST_4 ST_2}
+set_scope ..
+set_scope Scope_3_1
+create_power_domain Scope_3_1 -include_scope
+create_supply_port Port_3_1_0
+create_supply_net Port_3_1_0
+create_supply_port Port_3_1_1
+create_supply_net Port_3_1_1
+create_supply_port Port_3_1_2
+create_supply_net Port_3_1_2
+create_supply_port Port_3_1_3
+create_supply_net Port_3_1_3
+connect_supply_net Port_3_1_0 -ports {Port_3_1_0}
+connect_supply_net Port_3_1_1 -ports {Port_3_1_1}
+connect_supply_net Port_3_1_2 -ports {Port_3_1_2}
+connect_supply_net Port_3_1_3 -ports {Port_3_1_3}
+set_domain_supply_net Scope_3_1 -primary_power_net Port_3_1_1 -primary_ground_net Port_3_1_0
+add_port_state Port_3_1_0 -state {ST_0 off} 
+add_port_state Port_3_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_1 -supplies {Port_3_1_0 Port_3_1_1 Port_3_1_2 Port_3_1_3 }
+add_pst_state S0 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_1 -state {ST_0 ST_2 ST_0 ST_3}
+set_scope ..
+connect_supply_net Port_2_0_0 -ports {Port_2_0_0 Scope_3_0/Port_3_0_0 Scope_3_1/Port_3_1_0 }
+connect_supply_net Port_2_0_1 -ports {Port_2_0_1 Scope_3_0/Port_3_0_1 Scope_3_1/Port_3_1_1 }
+connect_supply_net Port_2_0_2 -ports {Port_2_0_2 Scope_3_1/Port_3_1_2 }
+connect_supply_net Port_2_0_3 -ports {Port_2_0_3 Scope_3_0/Port_3_0_3 Scope_3_1/Port_3_1_3 }
+set_domain_supply_net Scope_2_0 -primary_power_net Port_2_0_1 -primary_ground_net Port_2_0_0
+add_port_state Port_2_0_0 -state {ST_0 off} 
+add_port_state Port_2_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_2_0 -supplies {Port_2_0_0 Port_2_0_1 Port_2_0_2 Port_2_0_3 }
+add_pst_state S0 -pst pt_2_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_2_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_2_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_2_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_2_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_2_0 -state {ST_0 ST_0 ST_1 ST_4}
+set_scope ..
+set_scope Scope_2_1
+create_power_domain Scope_2_1 -include_scope
+create_supply_port Port_2_1_0
+create_supply_net Port_2_1_0
+create_supply_port Port_2_1_1
+create_supply_net Port_2_1_1
+create_supply_port Port_2_1_2
+create_supply_net Port_2_1_2
+create_supply_port Port_2_1_3
+create_supply_net Port_2_1_3
+set_scope Scope_3_0
+create_power_domain Scope_3_0 -include_scope
+create_supply_port Port_3_0_0
+create_supply_net Port_3_0_0
+create_supply_port Port_3_0_1
+create_supply_net Port_3_0_1
+create_supply_port Port_3_0_2
+create_supply_net Port_3_0_2
+create_supply_port Port_3_0_3
+create_supply_net Port_3_0_3
+connect_supply_net Port_3_0_0 -ports {Port_3_0_0}
+connect_supply_net Port_3_0_1 -ports {Port_3_0_1}
+connect_supply_net Port_3_0_2 -ports {Port_3_0_2}
+connect_supply_net Port_3_0_3 -ports {Port_3_0_3}
+set_domain_supply_net Scope_3_0 -primary_power_net Port_3_0_1 -primary_ground_net Port_3_0_0
+add_port_state Port_3_0_0 -state {ST_0 off} 
+add_port_state Port_3_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_0 -supplies {Port_3_0_0 Port_3_0_1 Port_3_0_2 Port_3_0_3 }
+add_pst_state S0 -pst pt_3_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_0 -state {ST_0 ST_4 ST_1 ST_2}
+set_scope ..
+set_scope Scope_3_1
+create_power_domain Scope_3_1 -include_scope
+create_supply_port Port_3_1_0
+create_supply_net Port_3_1_0
+create_supply_port Port_3_1_1
+create_supply_net Port_3_1_1
+create_supply_port Port_3_1_2
+create_supply_net Port_3_1_2
+create_supply_port Port_3_1_3
+create_supply_net Port_3_1_3
+connect_supply_net Port_3_1_0 -ports {Port_3_1_0}
+connect_supply_net Port_3_1_1 -ports {Port_3_1_1}
+connect_supply_net Port_3_1_2 -ports {Port_3_1_2}
+connect_supply_net Port_3_1_3 -ports {Port_3_1_3}
+set_domain_supply_net Scope_3_1 -primary_power_net Port_3_1_1 -primary_ground_net Port_3_1_0
+add_port_state Port_3_1_0 -state {ST_0 off} 
+add_port_state Port_3_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_3_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_3_1 -supplies {Port_3_1_0 Port_3_1_1 Port_3_1_2 Port_3_1_3 }
+add_pst_state S0 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_3_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_3_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_3_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_3_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_3_1 -state {ST_0 ST_1 ST_2 ST_1}
+set_scope ..
+connect_supply_net Port_2_1_0 -ports {Port_2_1_0 Scope_3_0/Port_3_0_0 Scope_3_1/Port_3_1_0 }
+connect_supply_net Port_2_1_1 -ports {Port_2_1_1 Scope_3_0/Port_3_0_1 Scope_3_1/Port_3_1_1 }
+connect_supply_net Port_2_1_2 -ports {Port_2_1_2 Scope_3_0/Port_3_0_2 Scope_3_1/Port_3_1_2 }
+connect_supply_net Port_2_1_3 -ports {Port_2_1_3 Scope_3_0/Port_3_0_3 Scope_3_1/Port_3_1_3 }
+set_domain_supply_net Scope_2_1 -primary_power_net Port_2_1_1 -primary_ground_net Port_2_1_0
+add_port_state Port_2_1_0 -state {ST_0 off} 
+add_port_state Port_2_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_2_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_2_1 -supplies {Port_2_1_0 Port_2_1_1 Port_2_1_2 Port_2_1_3 }
+add_pst_state S0 -pst pt_2_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_2_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_2_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_2_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_2_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_2_1 -state {ST_0 ST_0 ST_1 ST_1}
+set_scope ..
+connect_supply_net Port_1_1_0 -ports {Port_1_1_0 Scope_2_0/Port_2_0_0 Scope_2_1/Port_2_1_0 }
+connect_supply_net Port_1_1_1 -ports {Port_1_1_1 Scope_2_0/Port_2_0_1 Scope_2_1/Port_2_1_1 }
+connect_supply_net Port_1_1_2 -ports {Port_1_1_2 Scope_2_0/Port_2_0_2 Scope_2_1/Port_2_1_2 }
+connect_supply_net Port_1_1_3 -ports {Port_1_1_3 Scope_2_0/Port_2_0_3 Scope_2_1/Port_2_1_3 }
+set_domain_supply_net Scope_1_1 -primary_power_net Port_1_1_1 -primary_ground_net Port_1_1_0
+add_port_state Port_1_1_0 -state {ST_0 off} 
+add_port_state Port_1_1_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_1_1_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_1_1_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_1_1 -supplies {Port_1_1_0 Port_1_1_1 Port_1_1_2 Port_1_1_3 }
+add_pst_state S0 -pst pt_1_1 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_1_1 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_1_1 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_1_1 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_1_1 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_1_1 -state {ST_0 ST_2 ST_3 ST_2}
+set_scope ..
+connect_supply_net Port_0_0_0 -ports {Port_0_0_0 Scope_1_0/Port_1_0_0 Scope_1_1/Port_1_1_0 }
+connect_supply_net Port_0_0_1 -ports {Port_0_0_1 Scope_1_0/Port_1_0_1 Scope_1_1/Port_1_1_1 }
+connect_supply_net Port_0_0_2 -ports {Port_0_0_2 Scope_1_0/Port_1_0_2 Scope_1_1/Port_1_1_2 }
+connect_supply_net Port_0_0_3 -ports {Port_0_0_3 Scope_1_0/Port_1_0_3 Scope_1_1/Port_1_1_3 }
+set_domain_supply_net Scope_0_0 -primary_power_net Port_0_0_1 -primary_ground_net Port_0_0_0
+add_port_state Port_0_0_0 -state {ST_0 off} 
+add_port_state Port_0_0_1 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_0_0_2 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+add_port_state Port_0_0_3 -state {ST_0 off} -state {ST_1 0.1} -state {ST_2 0.2} -state {ST_3 0.3} -state {ST_4 0.4} 
+create_pst pt_0_0 -supplies {Port_0_0_0 Port_0_0_1 Port_0_0_2 Port_0_0_3 }
+add_pst_state S0 -pst pt_0_0 -state {ST_0 ST_1 ST_2 ST_3}
+add_pst_state S1 -pst pt_0_0 -state {ST_0 ST_2 ST_3 ST_4}
+add_pst_state S2 -pst pt_0_0 -state {ST_0 ST_3 ST_4 ST_0}
+add_pst_state S3 -pst pt_0_0 -state {ST_0 ST_4 ST_0 ST_1}
+add_pst_state S4 -pst pt_0_0 -state {ST_0 ST_0 ST_1 ST_2}
+add_pst_state S5 -pst pt_0_0 -state {ST_0 ST_3 ST_3 ST_4}
