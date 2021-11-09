@@ -14,20 +14,22 @@ int main(int argv, char **argc)
     std::string correct_fileName, myanswer_fileName;
     std::unordered_map<std::string, std::unordered_set<std::string>> State, NonZero_State;
 
-    if(argv < 2){
+    if (argv < 2)
+    {
         printf("parameter not enough\n");
         return 0;
     }
 
-    correct_fileName = argc[1];
-    myanswer_fileName = argc[2];
+    correct_fileName = argc[2];
+    myanswer_fileName = argc[1];
 
     std::string temp, t1, t2; // 临时变量
     std::fstream file;
 
-    file.open(myanswer_fileName, std::ios::in); 
-    if(!file.is_open()){
-        printf("no such file %s\n",myanswer_fileName.c_str());
+    file.open(myanswer_fileName, std::ios::in);
+    if (!file.is_open())
+    {
+        printf("no such file %s\n", myanswer_fileName.c_str());
         return 1;
     }
 
@@ -68,7 +70,6 @@ int main(int argv, char **argc)
         }
         else
         {
-            printf("有什么输入不太对\n");
             printf("你获得了： %s", temp.c_str());
         }
         file >> temp;
@@ -77,8 +78,9 @@ int main(int argv, char **argc)
     file.close();
     file.open(correct_fileName, std::ios::in);
 
-    if(!file.is_open()){
-        printf("no such file %s \n",correct_fileName.c_str());
+    if (!file.is_open())
+    {
+        printf("no such file %s \n", correct_fileName.c_str());
         return 1;
     }
 
@@ -102,7 +104,7 @@ int main(int argv, char **argc)
             auto T = State.find(t2);
             if (T == State.end())
             {
-                printf("Error, no such %s in %s\n", t1.c_str(),t2.c_str());
+                printf("Error, no such %s in %s\n", t1.c_str(), t2.c_str());
             }
             else if (T->second.find(t1) == T->second.end())
             {
@@ -151,7 +153,6 @@ int main(int argv, char **argc)
         }
         else
         {
-            printf("有什么输入不太对\n");
             printf("你获得了： %s", temp.c_str());
         }
         file >> temp;
@@ -183,6 +184,7 @@ int main(int argv, char **argc)
         }
     }
     file.close();
-    std::cout <<std::endl<<"Finish!"<<std::endl;
+    std::cout
+        << "terminal Finish!" << std::endl;
     return 0;
 }

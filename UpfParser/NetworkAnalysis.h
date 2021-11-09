@@ -4,14 +4,17 @@
 #include "UpfModel.h"
 #include <fstream>
 #include <unordered_set>
+#include <unistd.h>
 
 class unionPst
 {
 private:
     static unionPst *m_inst;
     std::vector<std::string> *m_header;  // 存放表头标题
-    std::vector<PwPstState *> *m_states; // 存放数据 TODO更换为一个二维度表格？
+    std::vector<PwPstState *> *m_states; // 存放数据 TODO更换为map方便根据状态查找
+    std::fstream m_file;                 // 将Pst重复的内容输出到文件
 
+    // 接下来是表格合并会使用到的数据
     std::unordered_map<std::string, std::pair<int, int>> m_samePortIndex; // 存放两张表格中表头相同的下标
     std::unordered_map<std::string, std::pair<int, int>> m_newPortIndex;  // 存放新增加的表项目
     std::unordered_set<int> m_unUsedPortIndex;                            // 记录下旧表中没有出现过的表头的下标
@@ -22,10 +25,12 @@ public:
     ~unionPst();
 
     static unionPst *getInstance();
-    void printRow(std::vector<PwSupplyState *> &row);                                                                  // 打印行的state
+
     void mergePst(PwScope *scope);                                                                                     // 合并表格
     std::vector<PwSupplyState *> mergeRow(std::vector<PwSupplyState *> *oldRow, std::vector<PwSupplyState *> *newRow); // 合并一行的内容
     void outputPst();                                                                                                  // 输出表格
+    std::vector<PwPstState *> *deDublicatePst(std::vector<PwPstState *> *newPst);                                      // 给新表去重，同时输出重复状态信息
+    
 };
 
 class NetworkAnalysis

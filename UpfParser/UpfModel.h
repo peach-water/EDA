@@ -282,7 +282,9 @@ public:
     int getPstHeaderSize() const {
         return m_header.size();
     }
-
+    std::vector<PwPstState*> * getPstStates(){ // 获得整张表
+        return &m_states;
+    }
 private:
     std::vector<PwSupplyNetwork*> m_header;
     std::vector<PwPstState*> m_states; // 这个存放的是一行
