@@ -498,22 +498,29 @@ void NetworkAnalysis::gnd_and_unused_check()
             }
 
             //创建pst_state_map,其中key全部都是port名而没有net名
+            int xx = 0, yy = 0;
+            std::string st2_getName;
+            std::unordered_map<int,std::string> st2_SupplyHierName;
             for (auto stp = (*pst)->beginPstStates(); stp != (*pst)->endPstStates(); stp++) // stp是pst的每一个state
             {
+                yy = 0;
                 for (auto st2 = (*stp)->beginStates(); st2 != (*stp)->endStates(); st2++)
                 {
-                    std::string st2_getName = (*st2)->getName();
-                    PwSupplyPort* st2_getOwnerSupply = (*st2)->getOwnerSupply();
-                    if (haveGnd && st2_getOwnerSupply ->getHierName() == gndPortHierName)
+                    st2_getName = (*st2)->getName();
+                    if(xx == 0)
+                        st2_SupplyHierName[yy] = (*st2)->getOwnerSupply()->getHierName();
+                    if (haveGnd && st2_SupplyHierName[yy] == gndPortHierName)
                     {
                         if ((*st2)->getValue() != 0)
                             NonZeroStates.insert(st2_getName);
                     }
-
-                    pst_state_map[st2_getOwnerSupply ->getName()].insert(st2_getName); // pst_state_map的Index只有port名没有net名
+                    pst_state_map[(*st2)->getOwnerSupply()->getName()].insert(st2_getName); // pst_state_map的Index只有port名没有net名
+                    yy ++;
                 }
+                xx ++;
                 // printf("\n");
             }
+            st2_SupplyHierName.clear();
 
             //输出未用到状态
             std::string hdout;
@@ -549,6 +556,7 @@ void NetworkAnalysis::gnd_and_unused_check()
                         }
                     }
                 }
+                pstHavePort = false;
             }
 
             //输出gnd非零状态

@@ -1,0 +1,156 @@
+create_power_domain PD_TOP -include_scope
+
+create_supply_port SP1
+create_supply_port SP2
+create_supply_port VSS
+create_supply_port SP3
+create_supply_net SN1
+create_supply_net SN2
+create_supply_net GN1
+create_supply_net SN3
+create_supply_net SN5
+
+set_scope Scope1
+create_power_domain PD_Scope1 -include_scope
+create_supply_port SP1_1
+create_supply_net SP1_1
+connect_supply_net SP1_1 -ports {SP1_1}
+create_supply_port SP2_1
+create_supply_net SP2_1
+connect_supply_net SP2_1 -ports {SP2_1}
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports {VSS}
+set_domain_supply_net PD_Scope1 -primary_power_net SP1_1 -primary_ground_net VSS
+add_port_state SP1_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state SP2_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt1 -supplies {SP1_1 SP2_1 VSS}
+add_pst_state S1 -pst pt1 -state {ON HV OFF}
+add_pst_state S2 -pst pt1 -state {ON LV OFF}
+add_pst_state S3 -pst pt1 -state {LV HV OFF}
+add_pst_state S4 -pst pt1 -state {HV HV OFF}
+add_pst_state S5 -pst pt1 -state {LV LV OFF}
+set_scope ..
+
+set_scope Scope2
+create_power_domain PD_Scope2 -include_scope
+create_supply_port SP1_2
+create_supply_net SP1_2
+connect_supply_net SP1_2 -ports {SP1_2}
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports {VSS}
+
+create_supply_port SP5
+set_domain_supply_net PD_Scope2 -primary_power_net SP1_2 -primary_ground_net VSS
+add_port_state SP1_2 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state SP5 -state {ON 1.2} -state {HV 1.0}
+add_port_state VSS -state {OFF off}
+create_pst pt2 -supplies {SP1_2 SP5 VSS}
+add_pst_state S1 -pst pt2 -state {ON ON OFF}
+add_pst_state S2 -pst pt2 -state {HV HV OFF}
+add_pst_state S3 -pst pt2 -state {LV ON OFF}
+add_pst_state S4 -pst pt2 -state {OFF ON OFF}
+set_scope ..
+
+set_scope Scope3
+create_power_domain PD_Scope3 -include_scope
+create_supply_port SP2_3
+create_supply_net SN2_3
+create_supply_port SP5_3 -direction out
+create_supply_net SP5_3
+connect_supply_net SP5_3 -ports {SP5_3}
+create_supply_port SP3_3
+create_supply_net SP3_3
+connect_supply_net SP3_3 -ports {SP3_3}
+create_supply_port VSS
+create_supply_net GN2
+create_supply_port SP4_3 -direction out
+create_supply_net SN4_3
+set_scope Scope3_1
+create_power_domain PD_Scope3_1 -include_scope
+create_supply_port SP2_3_1
+create_supply_net SP2_3_1
+connect_supply_net SP2_3_1 -ports {SP2_3_1}
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports {VSS}
+set_domain_supply_net PD_Scope3_1 -primary_power_net SP2_3_1 -primary_ground_net VSS
+add_port_state SP2_3_1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6}
+add_port_state VSS -state {OFF off}
+create_pst pt3_1 -supplies {SP2_3_1 VSS}
+add_pst_state S1 -pst pt3_1 -state {HV OFF}
+add_pst_state S2 -pst pt3_1 -state {LV OFF}
+add_pst_state S3 -pst pt3_1 -state {ON OFF}
+set_scope ..
+
+set_scope Scope3_2
+create_power_domain PD_Scope3_2 -include_scope
+create_supply_port SP4_3_2
+create_supply_net SN4
+create_supply_port VSS
+create_supply_net GN3
+set_scope Scope3_2_1
+create_power_domain PD_Scope3_2_1 -include_scope
+create_supply_port SP4
+create_supply_net SP4
+connect_supply_net SP4 -ports {SP4}
+create_supply_port VSS
+create_supply_net VSS
+connect_supply_net VSS -ports {VSS}
+set_domain_supply_net PD_Scope3_2_1 -primary_power_net SP4 -primary_ground_net VSS
+add_port_state SP4 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt3_2_1 -supplies {SP4 VSS}
+add_pst_state S1 -pst pt3_2_1 -state {ON OFF}
+add_pst_state S2 -pst pt3_2_1 -state {HV OFF}
+add_pst_state S3 -pst pt3_2_1 -state {LV OFF}
+add_pst_state S4 -pst pt3_2_1 -state {OFF OFF}
+set_scope ..
+connect_supply_net GN3 -ports {VSS Scope3_2_1/VSS}
+connect_supply_net SN4 -ports {SP4_3_2 Scope3_2_1/SP4}
+set_domain_supply_net PD_Scope3_2 -primary_power_net SN4 -primary_ground_net GN3
+add_port_state SP4_3_2 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt3_2 -supplies {SP4_3_2 VSS}
+add_pst_state S1 -pst pt3_2 -state {ON OFF}
+add_pst_state S2 -pst pt3_2 -state {HV OFF}
+add_pst_state S3 -pst pt3_2 -state {LV OFF}
+add_pst_state S4 -pst pt3_2 -state {OFF OFF}
+set_scope ..
+connect_supply_net GN2 -ports {VSS Scope3_1/VSS Scope3_2/VSS}
+connect_supply_net SN4_3 -ports {SP4_3 Scope3_2/SP4_3_2}
+connect_supply_net SN2_3 -ports {SP2_3 Scope3_1/SP2_3_1}
+set_domain_supply_net PD_Scope3 -primary_power_net SN2_3 -primary_ground_net GN2
+add_port_state SP2_3 -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state SP5_3 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6}
+add_port_state SP3_3 -state {ON 1.2} -state {LV 0.6} -state {OFF off}
+add_port_state SP4_3 -state {HV 1.0} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+create_pst pt3 -supplies {SP2_3 SP5_3 SP3_3 SP4_3 VSS}
+add_pst_state S1 -pst pt3 -state {HV ON ON HV OFF}
+add_pst_state S2 -pst pt3 -state {HV HV LV LV OFF}
+add_pst_state S3 -pst pt3 -state {LV ON OFF OFF OFF}
+add_pst_state S4 -pst pt3 -state {HV LV OFF HV OFF}
+set_scope ..
+
+connect_supply_net SN1 -ports {SP1 Scope1/SP1_1 Scope2/SP1_2}
+connect_supply_net SN2 -ports {SP2 Scope1/SP2_1 Scope3/SP2_3}
+connect_supply_net SN3 -ports {SP3 Scope3/SP3_3}
+connect_supply_net GN1 -ports {VSS Scope1/VSS Scope2/VSS Scope3/VSS}
+connect_supply_net SN5 -ports {Scope2/SP5 Scope3/SP5_3}
+
+set_domain_supply_net PD_TOP -primary_power_net SN1 -primary_ground_net GN1
+
+add_port_state SP1 -state {ON 1.2} -state {HV 1.0} -state {LV 0.6}
+add_port_state SP2 -state {HV 1.0} -state {LV 0.6}
+add_port_state SP3 -state {ON 1.2} -state {LV 0.6} -state {OFF off}
+add_port_state VSS -state {OFF off}
+
+create_pst pt -supplies {SN1 SN2 SN3 GN1}
+add_pst_state S1 -pst pt -state {ON HV ON OFF}
+add_pst_state S2 -pst pt -state {HV HV LV OFF}
+add_pst_state S3 -pst pt -state {HV HV LV OFF}
+add_pst_state S4 -pst pt -state {LV LV OFF OFF}
+

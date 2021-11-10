@@ -8,15 +8,13 @@ $(prom) : $(source)
 
 perf:
 	$(cc) -o $(prom) $(source) -ltcl8.5 -std=c++11 -pg
-	./parser -f ../TestCase/BMCases/case9/case.upf
-	gprof ./parser gmon.out|less -S
+	# ./parser -f ../TestCase/BMCases/case9/case.upf
+	# gprof ./parser gmon.out|less -S
 
-run : $(source)
-	$(cc) -o $(prom) $(source) -ltcl8.5 -std=c++11
-	./$(prom) -f ../TestCase/case2/test.upf
 debug: $(source)
 	# $(prom) : $(source)
 	$(cc) -o $(prom) $(source) -g -ltcl8.5 -std=c++11
 	gdb $(prom) 
+	
 clear: $(prom)
 	rm $(prom)

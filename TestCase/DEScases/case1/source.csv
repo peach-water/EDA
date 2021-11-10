@@ -1,0 +1,18 @@
+Supply_Source Scope3/SP5_3
+Supply_Net Scope3/SP5_3 SN5 
+Supply_Port Scope2/SP5 Scope3/SP5_3 
+Supply_Source VSS
+Supply_Net Scope3/Scope3_2/Scope3_2_1/VSS Scope3/Scope3_2/GN3 Scope3/Scope3_1/VSS Scope3/GN2 Scope2/VSS Scope1/VSS GN1 
+Supply_Port Scope3/Scope3_2/Scope3_2_1/VSS Scope3/Scope3_2/VSS Scope3/Scope3_1/VSS Scope3/VSS Scope2/VSS Scope1/VSS VSS 
+Supply_Source Scope3/SP4_3
+Supply_Net Scope3/Scope3_2/Scope3_2_1/SP4 Scope3/Scope3_2/SN4 Scope3/SN4_3 
+Supply_Port Scope3/Scope3_2/Scope3_2_1/SP4 Scope3/Scope3_2/SP4_3_2 Scope3/SP4_3 
+Supply_Source SP3
+Supply_Net Scope3/SP3_3 SN3 
+Supply_Port Scope3/SP3_3 SP3 
+Supply_Source SP2
+Supply_Net Scope3/Scope3_1/SP2_3_1 Scope3/SN2_3 Scope1/SP2_1 SN2 
+Supply_Port Scope3/Scope3_1/SP2_3_1 Scope3/SP2_3 Scope1/SP2_1 SP2 
+Supply_Source SP1
+Supply_Net Scope2/SP1_2 Scope1/SP1_1 SN1 
+Supply_Port Scope2/SP1_2 Scope1/SP1_1 SP1 

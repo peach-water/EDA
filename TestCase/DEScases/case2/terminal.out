@@ -1,0 +1,2 @@
+State "OFF" defined for "CPU1/SP3_1" is unused in PST!
+Non-Zero State "ON" applied on ground net "CPU1/VSS".
