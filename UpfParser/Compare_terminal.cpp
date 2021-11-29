@@ -11,6 +11,7 @@ std::string getString(std::string &input)
 
 int main(int argv, char **argc)
 {
+    bool correct = true;
     std::string correct_fileName, myanswer_fileName;
     std::unordered_map<std::string, std::unordered_set<std::string>> State, NonZero_State;
 
@@ -105,10 +106,12 @@ int main(int argv, char **argc)
             if (T == State.end())
             {
                 printf("Error, no such %s in %s\n", t1.c_str(), t2.c_str());
+                correct = false;
             }
             else if (T->second.find(t1) == T->second.end())
             {
                 printf("Error, %s no such %s\n", t2.c_str(), t1.c_str());
+                correct = false;
             }
             else
             {
@@ -136,6 +139,7 @@ int main(int argv, char **argc)
                 if (T == NonZero_State.end())
                 {
                     printf("Error, no %s", temp.c_str());
+                    correct = false;
                 }
                 else
                 {
@@ -143,6 +147,7 @@ int main(int argv, char **argc)
                     if (Y == NonZero_State[temp].end())
                     {
                         printf("Error, %s don't have %s\n", i->c_str(), temp.c_str());
+                        correct = false;
                     }
                     else
                     {
@@ -162,6 +167,7 @@ int main(int argv, char **argc)
     {
         if (i->second.size() != 0)
         {
+            correct = false;
             printf("You exist,but not correct: %s\n", i->first.c_str());
             for (auto j = i->second.begin(); j != i->second.end(); j++)
             {
@@ -175,6 +181,7 @@ int main(int argv, char **argc)
     {
         if (i->second.size() != 0)
         {
+            correct = false;
             printf("You exist,but not correct: %s\n", i->first.c_str());
             for (auto j = i->second.begin(); j != i->second.end(); j++)
             {
@@ -184,7 +191,15 @@ int main(int argv, char **argc)
         }
     }
     file.close();
-    std::cout
-        << "terminal Finish!" << std::endl;
+    if (correct)
+    {
+        std::cout<<"correct： the result of terminal.out is correct！"<<std::endl;
+    }
+    else 
+    {
+        std::cout<<"warning: the result of terminal.out isn't correct！"<<std::endl;
+    }
+    // std::cout
+    //     << "terminal Finish!" << std::endl;
     return 0;
 }

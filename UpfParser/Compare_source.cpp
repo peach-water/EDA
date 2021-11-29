@@ -9,6 +9,7 @@
 
 int main(int argv, char **argc)
 {
+    bool correct = true;
     std::unordered_map<std::string, std::unordered_set<std::string>> Supply_net, Supply_Port;
     std::fstream file;
     std::string correct_file_name;  // 正确答案文件名
@@ -118,6 +119,7 @@ int main(int argv, char **argc)
     {
         if (i->second.size() != 0)
         {
+            correct = false;
             std::cout << i->first << " Port error, exist ";
             for (auto j = i->second.begin(); j != i->second.end(); j++)
             {
@@ -131,6 +133,7 @@ int main(int argv, char **argc)
     {
         if (i->second.size() != 0)
         {
+            correct = false;
             std::cout << i->first << " net error, exist";
             for (auto j = i->second.begin(); j != i->second.end(); j++)
             {
@@ -139,6 +142,15 @@ int main(int argv, char **argc)
             printf("\n");
         }
     }
-    std::cout <<"Source Finish!" << std::endl;
+    // std::cout <<"Source Finish!" << std::endl;
+    if (correct)
+    {
+        std::cout<<"correct： the result of source.csv is correct！"<<std::endl;
+    }
+    else 
+    {
+        std::cout<<"warning: the result of source.csv isn't correct！"<<std::endl;
+    }
+    
     return 0;
 }

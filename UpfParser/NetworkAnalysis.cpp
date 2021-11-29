@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <cmath>
 #include "NetworkAnalysis.h"
 
 void printMap(const std::unordered_map<std::string, std::string> &Map)
@@ -13,11 +15,12 @@ unionPst::unionPst()
 {
     this->m_header = new std::vector<std::string>;
     this->m_states = new std::vector<PwPstState *>;
-    this->m_file.open("duplicatePst.out",std::ios::out); // 打开文件
-    while(!m_file.is_open()){
+    this->m_file.open("duplicatePst.out", std::ios::out); // 打开文件
+    while (!m_file.is_open())
+    {
         printf("无法打开文件\n");
         sleep(1);
-        this->m_file.open("duplicatePst.out",std::ios::out);
+        this->m_file.open("duplicatePst.out", std::ios::out);
     }
 }
 unionPst::~unionPst()
@@ -45,19 +48,8 @@ void unionPst::mergePst(PwScope *scope)
     NetworkAnalysis *analy = NetworkAnalysis::getInstance();
     for (auto i = scope->beginPsts(); i != scope->endPsts(); i++)
     {
-        /*printf("yes\n");
-        for (auto k = this->m_header->begin(); k != this->m_header->end(); k++)
-        {
-            printf("%s ", k->c_str());
-        }
-        printf("\n");
-        for (auto k = (*i)->beginHeaders(); k != (*i)->endHeaders(); k++)
-        {
-            printf("%s ", analy->GetSourcePortName((*k)->getHierName()).c_str());
-        }
-        printf("\n");*/
         std::vector<PwPstState *> *l_newPst = deDublicatePst((*i)->getPstStates()); // 接收到的去重表格
-        
+
         if (this->m_header->size() == 0 && this->m_states->size() == 0) // 如果当前还没有表格，直接将当前收到的Pst加入
         {
 
@@ -79,13 +71,21 @@ void unionPst::mergePst(PwScope *scope)
                 this->m_unUsedPortIndex.insert((int)j);
                 (*m_header)[j] = analy->GetSourcePortName((*m_header)[j]);
             }
+            std::vector<std::string> l_header;
+            for (auto new_header = (*i)->beginHeaders(); new_header != (*i)->endHeaders(); new_header++)
+            {
+                const std::string new_header_name = (*new_header)->getHierName();
+                l_header.push_back(analy->GetSourcePortName(new_header_name));
+            }
             // 查找两张表都有的表头
             for (auto now_header = this->m_header->begin(); now_header != this->m_header->end(); now_header++)
             {
-                for (auto new_header = (*i)->beginHeaders(); new_header != (*i)->endHeaders(); new_header++)
-                {
-                    const std::string now_header_name = analy->GetSourcePortName((*now_header));
-                    const std::string new_header_name = analy->GetSourcePortName((*new_header)->getHierName());
+                const std::string now_header_name = analy->GetSourcePortName((*now_header));
+                // for (auto new_header = (*i)->beginHeaders(); new_header != (*i)->endHeaders(); new_header++)
+                for (size_t new_header = 0; new_header != l_header.size(); new_header++)
+                {                  
+                    const std::string new_header_name = l_header[new_header];
+
                     if (now_header_name == new_header_name)
                     {
                         std::pair<int, int> temp(x, y); // 先保存当前的index，再保存新表格的index
@@ -97,12 +97,11 @@ void unionPst::mergePst(PwScope *scope)
                 x++;
                 y = 0;
             }
-
             x = 0;
             // 计算新添加了表头
-            for (auto new_header = (*i)->beginHeaders(); new_header != (*i)->endHeaders(); new_header++)
+            for (size_t new_header = 0; new_header != l_header.size(); new_header++)
             {
-                const std::string new_header_name = analy->GetSourcePortName((*new_header)->getHierName());
+                const std::string new_header_name = l_header[new_header];
                 // 表示需要添加新内容
                 if (this->m_samePortIndex.find(new_header_name) == this->m_samePortIndex.end())
                 {
@@ -113,6 +112,7 @@ void unionPst::mergePst(PwScope *scope)
                 }
                 x++;
             }
+            l_header.clear();
 
             std::vector<PwPstState *> *new_m_states = new std::vector<PwPstState *>; // 创建一张全新的表格
             int merge_size = this->m_samePortIndex.size(), now_size = 0;             // 分别用来记录两张表一共有多少表头重合，现在多少重合
@@ -124,7 +124,6 @@ void unionPst::mergePst(PwScope *scope)
                     std::vector<PwSupplyState *> *new_row = (*new_state)->getStates();
                     for (auto pairs = this->m_samePortIndex.begin(); pairs != this->m_samePortIndex.end(); pairs++)
                     {
-
                         // 检查是否满足行合并的条件
                         if ((*now_row)[pairs->second.first]->getValue() == (*new_row)[pairs->second.second]->getValue())
                         {
@@ -159,7 +158,7 @@ void unionPst::mergePst(PwScope *scope)
                     delete *j;
                 }
             delete tmp;
-            l_counter++;
+            l_counter = 1;
         }
         delete l_newPst;
     }
@@ -201,9 +200,12 @@ std::vector<PwPstState *> *unionPst::deDublicatePst(std::vector<PwPstState *> *n
         {
             l_temp += (*j)->getName();
         }
-        if(l_deDublicate.find(l_temp) != l_deDublicate.end()){
+        if (l_deDublicate.find(l_temp) != l_deDublicate.end())
+        {
             this->m_file << l_deDublicate[l_temp]->getHierName() << "    " << (*i)->getHierName() << std::endl;
-        }else{
+        }
+        else
+        {
             l_deDublicate[l_temp] = (*i);
             l_result->push_back(*i);
         }
@@ -241,7 +243,16 @@ void unionPst::outputPst()
             }
             else
             {
-                file << t << ' ';
+                if (std::abs(std::round(t) - t) < 1e-6)
+                {
+                    file << std::fixed << std::setprecision(1) << t << ' ';
+                    file.unsetf(std::ios_base::fixed);
+                    file << std::setprecision(6);
+                }
+                else
+                {
+                    file << t << ' ';
+                }
             }
         }
         file << std::endl;
@@ -285,22 +296,44 @@ void NetworkAnalysis::networkAnaly()
     PwObjMgr *manager = PwObjMgr::getInstance();
     PwScope *current = manager->getCurrentScope();
 
-    std::unordered_map<std::string, int> sourcePortMap; // TODO:可以考虑换成set
+    std::unordered_map<std::string, int> sourcePortMap;                  // TODO:可以考虑换成set
+    std::vector<std::pair<PwSupplyNet *, PwSupplyPort *>> l_unused_Conn; // 记录下还没有使用过的链接
+    std::unordered_map<void *, std::string> l_point_to_name;             // 记录下Port或者Net指针调用getHierName的结果
+
     for (auto i = current->beginSupplyPorts(); i != current->endSupplyPorts(); ++i)
     {
-        sourcePortMap[(*i)->getHierName()] = 1;
+        const std::string l_supplyPort_Name = (*i)->getHierName();
+        sourcePortMap[l_supplyPort_Name] = 1;
+        l_point_to_name[(*i)] = l_supplyPort_Name;
     }
-
-    std::vector<std::pair<PwSupplyNet *, PwSupplyPort *>> l_unused_Conn; // 记录下还没有使用过的链接
 
     for (auto i = current->beginSupplyConn(); i != current->endSupplyConn(); ++i)
     {
-        const std::string l_supplyPort_Name = (*i)->getSupplyPort()->getHierName();
-        const std::string l_supplyNet_Name = (*i)->getSupplyNet()->getHierName();
+        std::string l_supplyPort_Name = "";
+        std::string l_supplyNet_Name = "";
+        if (l_point_to_name.find((*i)->getSupplyPort()) == l_point_to_name.end())
+        {
+            l_supplyPort_Name = (*i)->getSupplyPort()->getHierName();
+            l_point_to_name[(void *)(*i)->getSupplyPort()] = l_supplyPort_Name;
+        }
+        else
+        {
+            l_supplyPort_Name = l_point_to_name[(*i)->getSupplyPort()];
+        }
+        if (l_point_to_name.find((*i)->getSupplyNet()) == l_point_to_name.end())
+        {
+            l_supplyNet_Name = (*i)->getSupplyNet()->getHierName();
+            l_point_to_name[(void *)(*i)->getSupplyNet()] = l_supplyNet_Name;
+        }
+        else
+        {
+            l_supplyNet_Name = l_point_to_name[(*i)->getSupplyNet()];
+        }
 
         // Port在外面的定义，判断条件是out端口同时相连的net没有source端口
         if (sourcePortMap.find((l_supplyPort_Name)) != sourcePortMap.end() || ((*i)->getSupplyPort()->isOutput() && this->m_sourceMap.find(l_supplyNet_Name) == this->m_sourceMap.end()))
         {
+            // 这里是初始化一个新的端口
             if (this->m_sourceMap.find(l_supplyPort_Name) == this->m_sourceMap.end())
             {
                 this->m_sourceMap[l_supplyPort_Name] = l_supplyPort_Name;
@@ -324,8 +357,8 @@ void NetworkAnalysis::networkAnaly()
     // 开始处理Net链接的东西，防止conn最开始的一项没有连接Port出现BUG
     for (auto i = l_unused_Conn.begin(); i != l_unused_Conn.end(); i++)
     {
-        const std::string l_supplyNet_Name = i->first->getHierName();
-        const std::string l_supplyPort_Name = i->second->getHierName();
+        const std::string l_supplyNet_Name = l_point_to_name[i->first];
+        const std::string l_supplyPort_Name = l_point_to_name[i->second];
         if (this->m_sourceMap.find(l_supplyNet_Name) == this->m_sourceMap.end())
         {
             this->m_sourceMap[l_supplyNet_Name] = l_supplyNet_Name;
@@ -366,21 +399,19 @@ void NetworkAnalysis::networkAnaly()
         this->m_endPortMap[this->m_sourceMap[l_supplyNet_Name]].insert(l_supplyPort_Name);
     }
 
-    if (sourcePortMap.size() != 0) // 出现了啥都没有链接的端口
+    for (auto i = sourcePortMap.begin(); i != sourcePortMap.end(); i++)
     {
-        for (auto i = sourcePortMap.begin(); i != sourcePortMap.end(); i++)
-        {
-            const std::string l_supplyPort_Name = i->first;
-            auto T = this->m_sourceMap.find(l_supplyPort_Name);
-            if (T != this->m_sourceMap.end())
-                continue;
-            this->m_sourceMap[l_supplyPort_Name] = l_supplyPort_Name;
-            this->m_endNetMap[l_supplyPort_Name].clear();
-            this->m_endPortMap[l_supplyPort_Name].insert(l_supplyPort_Name);
-            this->m_supplyList.insert(l_supplyPort_Name);
-        }
+        const std::string l_supplyPort_Name = i->first;
+        auto T = this->m_sourceMap.find(l_supplyPort_Name);
+        if (T != this->m_sourceMap.end())
+            continue;
+        this->m_sourceMap[l_supplyPort_Name] = l_supplyPort_Name;
+        this->m_endNetMap[l_supplyPort_Name].clear();
+        this->m_endPortMap[l_supplyPort_Name].insert(l_supplyPort_Name);
+        this->m_supplyList.insert(l_supplyPort_Name);
     }
 
+    l_point_to_name.clear();
     sourcePortMap.clear();
     l_unused_Conn.clear();
 }
@@ -426,27 +457,21 @@ void NetworkAnalysis::outputNetwork()
     {
         const std::string l_supplyPort_Name = *i;
 
-        // printf("Supply_source %s\n", l_supplyPort_Name.c_str());
         outfile << "Supply_Source " << l_supplyPort_Name << std::endl;
-        // printf("Supply_Net ");
+
         outfile << "Supply_Net ";
         std::unordered_set<std::string> *temp = &m_endNetMap[l_supplyPort_Name];
         for (auto j = temp->begin(); j != temp->end(); j++)
         {
-            // printf("%s ", j->c_str());
             outfile << *j << " ";
         }
-        // printf("\n");
         outfile << std::endl;
-        // printf("Supply_Port ");
         outfile << "Supply_Port ";
         temp = &m_endPortMap[l_supplyPort_Name];
         for (auto j = temp->begin(); j != temp->end(); j++)
         {
-            // printf("%s ", j->c_str());
             outfile << *j << " ";
         }
-        // printf("\n");
         outfile << std::endl;
     }
     outfile.close();
@@ -465,22 +490,20 @@ void NetworkAnalysis::gnd_and_unused_check()
             haveGnd = 0;
 
         PwSupplyPort *gndPort;
-        std::string gndPortHierName;
+        std::string gndPortName;
         if (haveGnd)
         {
             gndPort = gndNet->getDriver()->getSupplyPort(); //获取地线的供电端口
-            gndPortHierName = gndPort->getHierName();
-        }  
+            gndPortName = gndPort->getName();
+        }
 
         //创建定义的供电端口port_state_map
         std::unordered_map<std::string, std::unordered_set<std::string>> port_state_map;
-        std::unordered_set<std::string> key_ports;
         std::unordered_set<std::string> NonZeroStates;
         std::string portName;
         for (auto pt = current->beginSupplyPorts(); pt != current->endSupplyPorts(); pt++)
         {
             portName = (*pt)->getName();
-            key_ports.insert(portName);
             for (auto st = (*pt)->beginStates(); st != (*pt)->endStates(); st++)
             {
                 port_state_map[portName].insert((*st)->getName());
@@ -500,24 +523,26 @@ void NetworkAnalysis::gnd_and_unused_check()
             //创建pst_state_map,其中key全部都是port名而没有net名
             int xx = 0, yy = 0;
             std::string st2_getName;
-            std::unordered_map<int,std::string> st2_SupplyHierName;
+            std::unordered_map<int, std::string> st2_SupplyHierName;
             for (auto stp = (*pst)->beginPstStates(); stp != (*pst)->endPstStates(); stp++) // stp是pst的每一个state
             {
                 yy = 0;
                 for (auto st2 = (*stp)->beginStates(); st2 != (*stp)->endStates(); st2++)
                 {
                     st2_getName = (*st2)->getName();
-                    if(xx == 0)
-                        st2_SupplyHierName[yy] = (*st2)->getOwnerSupply()->getHierName();
-                    if (haveGnd && st2_SupplyHierName[yy] == gndPortHierName)
+                    if (xx == 0)
+                    {
+                        st2_SupplyHierName[yy] = (*st2)->getOwnerSupply()->getName();
+                    }
+                    if (haveGnd && st2_SupplyHierName[yy] == gndPortName)
                     {
                         if ((*st2)->getValue() != 0)
                             NonZeroStates.insert(st2_getName);
                     }
-                    pst_state_map[(*st2)->getOwnerSupply()->getName()].insert(st2_getName); // pst_state_map的Index只有port名没有net名
-                    yy ++;
+                    pst_state_map[st2_SupplyHierName[yy]].insert(st2_getName); // pst_state_map的Index只有port名没有net名
+                    yy++;
                 }
-                xx ++;
+                xx++;
                 // printf("\n");
             }
             st2_SupplyHierName.clear();
@@ -525,31 +550,32 @@ void NetworkAnalysis::gnd_and_unused_check()
             //输出未用到状态
             std::string hdout;
             bool pstHavePort = 0;
-            for (auto kp = key_ports.begin(); kp != key_ports.end(); kp++)
+            for (auto kp = port_state_map.begin(); kp != port_state_map.end(); kp++)
             {
-
-                if (headerSet.find(*kp) != headerSet.end()) // header是ports
+                std::string k_p = (*kp).first;
+                if (headerSet.find(k_p) != headerSet.end()) // header是ports
                 {
-                    hdout = current->findSupplyPort((*kp))->getHierName();
+                    hdout = current->findSupplyPort((k_p))->getHierName();
                     pstHavePort = 1;
                 }
                 else // header是net
                 {
                     for (auto hd = headerSet.begin(); hd != headerSet.end(); hd++)
                     {
-                        if (current->findSupplyNet((*hd))->getDriver()->getSupplyPort()->getName() == (*kp))
+                        if (current->findSupplyNet((*hd))->getDriver()->getSupplyPort()->getName() == (k_p))
                         {
                             hdout = current->findSupplyNet((*hd))->getHierName();
                             pstHavePort = 1;
+                            break;
                         }
                     }
                 }
                 //如果pst里有之前定义的port
                 if (pstHavePort)
                 {
-                    for (auto stpt = port_state_map[(*kp)].begin(); stpt != port_state_map[(*kp)].end(); stpt++)
+                    for (auto stpt = port_state_map[k_p].begin(); stpt != port_state_map[k_p].end(); stpt++)
                     {
-                        if (pst_state_map[(*kp)].find(*stpt) == pst_state_map[(*kp)].end())
+                        if (pst_state_map[k_p].find(*stpt) == pst_state_map[k_p].end())
                         {
                             this->m_outputfile << "State \"" << (*stpt) << "\" defined for \""
                                                << hdout << "\" is unused in PST!" << std::endl;
@@ -574,7 +600,6 @@ void NetworkAnalysis::gnd_and_unused_check()
             pst_state_map.clear();
         }
         port_state_map.clear();
-        key_ports.clear();
         NonZeroStates.clear();
     }
 }

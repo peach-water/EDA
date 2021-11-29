@@ -30,12 +30,28 @@ std::string chg(std::string str)
     return str;
 }
 
+std::string chgth(int a)
+{
+    std::string b;
+    if (a % 10 == 1)   
+        b = "st";
+    else if (a % 10 == 2)
+        b = "nd";
+    else if (a % 10 == 3)
+        b = "rd";
+    else
+        b = "th";
+    return b;
+}
+
 int main(int argv, char **argc)
 {
+    bool correct = true;
     std::string correct_fileName, myanswer_fileName;
     std::unordered_map<int, std::unordered_map<int, std::string>> correctState, myState;
     std::unordered_map<std::string, int> correctHeader;
     std::unordered_map<int, int> f;
+    std::unordered_set<int> nc_row;
 
     correct_fileName = argc[2];
     myanswer_fileName = argc[1];
@@ -53,7 +69,7 @@ int main(int argv, char **argc)
 
     file >> temp;
 
-    int row_num, col_num;
+    int first_row_num, first_col_num;
     while (!file.eof())
     {
         for (int i = 0; i < 10000; i++)
@@ -66,7 +82,7 @@ int main(int argv, char **argc)
             }
             else
             {
-                col_num = i; //记录表列数
+                first_col_num = i; //记录表列数
                 break;
             }
         }
@@ -75,11 +91,11 @@ int main(int argv, char **argc)
 
         for (int row = 0; !file.eof(); row++)
         {
-            for (int col = 0; col < col_num; col++)
+            for (int col = 0; col < first_col_num; col++)
             {
                 temp = chg(temp);
                 correctState[row][col] = temp;
-                row_num = row + 1; //记录表行数
+                first_row_num = row + 1; //记录表行数
                 //  std::cout<<temp<<" ";
                 file >> temp;
             }
@@ -100,7 +116,7 @@ int main(int argv, char **argc)
 
     file >> temp;
 
-    int cnum;
+    int myColNum; int myRowNum;
     while (!file.eof())
     {
         for (int i = 0; i < 10000; i++)
@@ -109,7 +125,8 @@ int main(int argv, char **argc)
             {
                 if (correctHeader.find(temp) == correctHeader.end())
                 {
-                    std::cout<<"Don't have header \""<<temp<<" \""<<std::endl;
+                    std::cout<<"Don't have header \""<<temp<<"\""<<std::endl;
+                    correct = false;
                 }
                 else
                 {
@@ -120,8 +137,8 @@ int main(int argv, char **argc)
             }
             else
             {
-                cnum = i;
-                // std::cout<<cnum<<" ";
+                myColNum = i;
+                // std::cout<<myColNum<<" ";
                 break;
             }
         }
@@ -130,36 +147,45 @@ int main(int argv, char **argc)
 
         for (int row = 0; !file.eof(); row++)
         {
-            for (int col = 0; col < cnum; col++)
+            for (int col = 0; col < myColNum; col++)
             {
                 temp = chg(temp);
                 myState[row][col] = temp;
                 //  std::cout<<temp<<" ";
                 file >> temp;
             }
+            myRowNum = row +1;
+            nc_row.insert(row);
             //  std::cout<<std::endl;
         }
     }
-    file.close();
 
     //比较两个表
     bool rowCorrect = 0;
-    int correct_col_num = 0, correct_row_num = 0, NonCorrectRow = 0;
-    if (col_num != cnum)
+    bool m_rowCorrect = 1;
+    int correct_col_num = 0, NonCorrectRow = 0;
+    if (first_col_num != myColNum)
     {
-        std::cout << "The num of headers is incorrect" << std::endl;
+        std::cout << "The num of headers isn't correct" << std::endl;
+        correct = false;
     }
     else
     {
-        for (int i = 0; i < row_num; i++)
+        if (first_row_num != myRowNum)
+        {
+            std::cout << "The num of PstStates isn't correct" << std::endl;
+            m_rowCorrect = false;
+            correct = false;
+        }
+        for (int i = 0; i < first_row_num; i++)
         {
             rowCorrect = 0;
             NonCorrectRow = 0;
-            for (int myRow = 0; !rowCorrect && myRow < row_num; myRow++)
+            for (int myRow = 0; !rowCorrect && myRow < myRowNum; myRow++)
             {
-                for (int j = 0; j < col_num; j++)
+                for (int j = 0; j < first_col_num; j++)
                 {
-                    if (myState[i][j] == correctState[myRow][f[j]])
+                    if (myState[myRow][j] == correctState[i][f[j]])
                     {
                         correct_col_num += 1;
                     }
@@ -170,25 +196,51 @@ int main(int argv, char **argc)
                         break;
                     }
                 }
-                if (correct_col_num == col_num)
+                if (correct_col_num == first_col_num)
                 {
                     rowCorrect = 1;
-                    correct_row_num += 1;
+                    nc_row.erase(myRow);
                 }
                 correct_col_num = 0;
             }
-            if (NonCorrectRow == row_num)
+            // std::cout<<myRowNum<<"-"<<NonCorrectRow<< std::endl;
+            if (NonCorrectRow == myRowNum)
             {
-                // std::cout<<NonCorrectRow<<"-"<<row_num<<std::endl;
-                std::cout << "The " << i + 1 << " row is incorrect" << std::endl; // myPst的第i行状态不正确
+                // std::cout<<"----"<<first_row_num<<"-"<<myRowNum<<std::endl;
+                // std::cout << "The " << i + 1 << " row in correct pst doesn't exist!" << std::endl; // myPst的第i行状态不正确
+                std::cout << "The " << i + 1 << chgth(i + 1) << " PstState in the correct pst doesn't exist in my pst!." << std::endl; // correct_pst的第几行不存在
+                correct = false;
             }
         }
-        if (correct_row_num == row_num)
+        if (!m_rowCorrect && !nc_row.empty())
         {
-            // std::cout<<"The pst is correct"<<std::endl;
+            std::cout<<"The ";
+            for (auto nc = nc_row.begin(); nc != nc_row.end(); nc++)
+            {
+                std::cout << (*nc)+1 << chgth((*nc) + 1) <<" ";
+            }   
+            std::cout<<"PstState in my pst is not correct!"<<std::endl;
         }
     }
 
-    std::cout << "Pst Finish!" << std::endl;
+    // std::cout << "Pst Finish!" << std::endl;
+    if (correct)
+    {
+        std::cout<<"correct： the result of pst.csv is correct！"<<std::endl;
+        std::cout<<std::endl;
+    }
+    else 
+    {
+        std::cout<<"warning: the result of pst.csv isn't correct！"<<std::endl;
+        std::cout<<std::endl;
+    }
+
+    correctState.clear();
+    myState.clear();
+    correctState.clear();
+    f.clear();
+    nc_row.clear();
+
     return 0;
+
 }
